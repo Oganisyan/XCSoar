@@ -35,7 +35,7 @@ static constexpr unsigned char geometry_counts[] = {
   8, 8, 8, 8, 8, 8,
   9, 5, 12, 24, 12,
   12, 9, 8, 4, 4, 4, 4,
-  8, 16,
+  8, 16,4,
 };
 
 namespace InfoBoxLayout
@@ -200,6 +200,30 @@ InfoBoxLayout::Calculate(PixelRect rc, InfoBoxSettings::Geometry geometry)
 
     break;
 
+  case InfoBoxSettings::Geometry::TOP_4_VARIO:
+    layout.vario.left = rc.right - 2*layout.control_size.cx / 3;
+    layout.vario.right = rc.right;
+    layout.vario.top = rc.top;
+    layout.vario.bottom = rc.top + layout.control_size.cy * 2;
+
+    right = layout.vario.left;
+
+    /* fall through */
+    if (layout.landscape) {
+      rc.left = MakeLeftColumn(layout, layout.positions, 2,
+                               rc.left, rc.top, rc.bottom);
+      rc.left = MakeLeftColumn(layout, layout.positions + 2, 2,
+                               rc.left, rc.top, rc.bottom);
+    } else {
+      rc.top = MakeTopRow(layout, layout.positions, 2,
+                          rc.left, right, rc.top);
+      rc.top = MakeTopRow(layout, layout.positions + 2, 2,
+                          rc.left, right, rc.top);
+    }
+
+    break;
+	
+	
   case InfoBoxSettings::Geometry::LEFT_6_RIGHT_3_VARIO:
     layout.vario.left = rc.right - layout.control_size.cx;
     layout.vario.right = rc.right;
@@ -382,6 +406,7 @@ InfoBoxLayout::ValidateGeometry(InfoBoxSettings::Geometry geometry,
     case InfoBoxSettings::Geometry::OBSOLETE_TOP_LEFT_4:
     case InfoBoxSettings::Geometry::OBSOLETE_BOTTOM_RIGHT_4:
     case InfoBoxSettings::Geometry::TOP_8_VARIO:
+    case InfoBoxSettings::Geometry::TOP_4_VARIO:
       break;
     }
   }
@@ -457,6 +482,12 @@ InfoBoxLayout::CalcInfoBoxSizes(Layout &layout, PixelSize screen_size,
                                                        layout.control_size.cx);
     break;
 
+  case InfoBoxSettings::Geometry::TOP_4_VARIO:
+    // calculate control dimensions
+    layout.control_size.cx = 2 * screen_size.cx / (layout.count + 2);
+    layout.control_size.cy = CalculateInfoBoxRowHeight(screen_size.cy,
+                                                       layout.control_size.cx);
+    break;
   case InfoBoxSettings::Geometry::RIGHT_9_VARIO:
   case InfoBoxSettings::Geometry::LEFT_6_RIGHT_3_VARIO:
     // calculate control dimensions
@@ -584,6 +615,7 @@ InfoBoxLayout::GetBorder(InfoBoxSettings::Geometry geometry, bool landscape,
     break;
 
   case InfoBoxSettings::Geometry::TOP_8_VARIO:
+  case InfoBoxSettings::Geometry::TOP_4_VARIO:
     border |= BORDERBOTTOM|BORDERRIGHT;
     break;
 

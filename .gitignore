@@ -25,6 +25,8 @@ tmp/
 test/data/private
 /.project
 /.cproject
+/mach.sh
+/src/boost
 .DS_Store
 massif.out.*
 build/local-config.mk

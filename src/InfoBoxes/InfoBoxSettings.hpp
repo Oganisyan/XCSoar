@@ -113,6 +113,8 @@ struct InfoBoxSettings {
 
     /** 16 infoboxes along right side (2x8) */
     RIGHT_16 = 19,
+     /** 8 top + vario */
+    TOP_4_VARIO = 20,
 
   } geometry;
 
