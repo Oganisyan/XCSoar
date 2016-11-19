@@ -81,7 +81,7 @@ SerialPort::Open(const TCHAR *path, unsigned _baud_rate)
   // Open the serial port.
   hPort = CreateFile(path,
                      GENERIC_READ | GENERIC_WRITE, // Access (read-write) mode
-                     0,            // Share mode
+                     1,            // Share mode
                      nullptr, // Pointer to the security attribute
                      OPEN_EXISTING,// How to open the serial port
 #ifdef _WIN32_WCE

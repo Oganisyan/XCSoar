@@ -70,6 +70,7 @@ static constexpr struct {
   { DeviceConfig::PortType::DISABLED, N_("Disabled") },
 #ifdef _WIN32_WCE
   { DeviceConfig::PortType::AUTO, N_("GPS Intermediate Driver") },
+  { DeviceConfig::PortType::WinCEBaro, N_("WinCE Barometer") },
 #endif
 #ifdef HAVE_INTERNAL_GPS
   { DeviceConfig::PortType::INTERNAL, N_("Built-in GPS & sensors") },
@@ -368,6 +369,7 @@ SetPort(DataFieldEnum &df, const DeviceConfig &config)
   case DeviceConfig::PortType::UDP_LISTENER:
   case DeviceConfig::PortType::PTY:
   case DeviceConfig::PortType::RFCOMM_SERVER:
+  case DeviceConfig::PortType::WinCEBaro:
     break;
 
   case DeviceConfig::PortType::SERIAL:
@@ -750,6 +752,7 @@ FinishPortField(DeviceConfig &config, const DataFieldEnum &df)
   case DeviceConfig::PortType::TCP_LISTENER:
   case DeviceConfig::PortType::UDP_LISTENER:
   case DeviceConfig::PortType::RFCOMM_SERVER:
+  case DeviceConfig::PortType::WinCEBaro:
     if (new_type == config.port_type)
       return false;
 

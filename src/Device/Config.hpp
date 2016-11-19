@@ -102,6 +102,11 @@ struct DeviceConfig {
      * for debugging.
      */
     PTY,
+	
+	/**
+	 * Medion Barometer WinCEBaro
+	 */
+	 WinCEBaro,
   };
 
   /**
@@ -279,7 +284,7 @@ struct DeviceConfig {
       port_type == PortType::AUTO || port_type == PortType::TCP_LISTENER ||
       port_type == PortType::TCP_CLIENT ||
       port_type == PortType::IOIOUART || port_type == PortType::PTY ||
-      port_type == PortType::UDP_LISTENER;
+      port_type == PortType::UDP_LISTENER || port_type == PortType::WinCEBaro;
   }
 
   bool UsesDriver() const {

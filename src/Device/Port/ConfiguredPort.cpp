@@ -32,6 +32,7 @@ Copyright_License {
 
 #ifdef _WIN32_WCE
 #include "Config/Registry.hpp"
+#include "WinCEBaroPort.hpp"
 #else
 #include "TCPClientPort.hpp"
 #endif
@@ -228,6 +229,17 @@ OpenPortInternal(const DeviceConfig &config, PortListener *listener,
     return nullptr;
 #endif
   }
+  
+  case DeviceConfig::PortType::WinCEBaro: {
+    WinCEBaroPort *port = new WinCEBaroPort(listener, handler);
+    if (!port->Open()) {
+      delete port;
+      return nullptr;
+    }
+
+    return port;
+  }
+  
   }
 
   if (path == nullptr)

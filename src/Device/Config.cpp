@@ -73,6 +73,8 @@ DeviceConfig::IsAvailable() const
 #else
     return false;
 #endif
+  case PortType::WinCEBaro:
+    return IsWindowsCE(); // TODO is WinCEBaro
   }
 
   /* unreachable */
@@ -101,6 +103,7 @@ DeviceConfig::ShouldReopenOnTimeout() const
   case PortType::I2CPRESSURESENSOR:
   case PortType::IOIOVOLTAGE:
   case PortType::TCP_CLIENT:
+  case PortType::WinCEBaro:
     /* errors on these are detected automatically by the driver */
     return false;
 
@@ -273,6 +276,10 @@ DeviceConfig::GetPortName(TCHAR *buffer, size_t max_size) const
   case PortType::PTY:
     StringFormat(buffer, max_size, _T("Pseudo-terminal %s"), path.c_str());
     return buffer;
+
+  case PortType::WinCEBaro:
+    return _("WinCE Barometer");
+	
   }
 
   gcc_unreachable();

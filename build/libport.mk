@@ -18,7 +18,9 @@ PORT_SOURCES += $(SRC)/Device/Port/SerialPort.cpp
 endif
 
 ifeq ($(HAVE_CE),y)
-PORT_SOURCES += $(SRC)/Device/Port/Widcomm.cpp
+PORT_SOURCES += \
+	$(SRC)/Device/Port/Widcomm.cpp \
+	$(SRC)/Device/Port/WinCEBaroPort.cpp
 else
 PORT_SOURCES += $(SRC)/Device/Port/TCPClientPort.cpp
 endif
